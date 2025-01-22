@@ -19,9 +19,11 @@ composer create-project laravel/laravel D:/www/example.org
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\App;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
-{    
+{
     public function register(): void
     {
         // Create symlinks from public to public_html directory in config/filesystems.php
@@ -41,7 +43,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        // Laravel force https
+        // if (App::environment(['staging', 'production'])) {
+        //     URL::forceScheme('https');
+        // }
     }
 }
 ```
@@ -69,6 +74,10 @@ Options -Indexes -MultiViews +SymLinksIfOwnerMatch
 # Options -Indexes -MultiViews +FollowSymlinks
 
 DirectoryIndex index.php
+
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 ```
 
 ## Xampp
