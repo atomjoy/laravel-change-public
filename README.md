@@ -133,11 +133,10 @@ C:\xampp\apache\conf\extra\vhosts\example.org.conf
     #RewriteEngine On
     #RewriteCond %{HTTPS} off
     #RewriteRule (.*) https://%{SERVER_NAME}$1 [R,L]
-
-    <Directory "D:/www/example.org/public_html">
-        # Invalid in xampp followsymlinks does not work
-        # Options -Indexes -MultiViews FollowSymLinks
-        Options -Indexes -MultiViews
+    
+    <Directory "D:/www/example.org/public_html">        
+        #Options -Indexes -MultiViews +SymLinksIfOwnerMatch
+        Options -Indexes -MultiViews +FollowSymLinks
         AllowOverride all
         Order Deny,Allow
         Allow from all
@@ -170,9 +169,8 @@ C:\xampp\apache\conf\extra\vhosts\example.org.conf
     SSLCertificateKeyFile "conf/ssl.key/server.key"
 
     <Directory "D:/www/example.org/public_html">
-        # Invalid in xampp followsymlinks does not work
-        # Options -Indexes -MultiViews FollowSymLinks
-        Options -Indexes -MultiViews
+        #Options -Indexes -MultiViews +SymLinksIfOwnerMatch
+        Options -Indexes -MultiViews +FollowSymLinks
         AllowOverride all
         Order Deny,Allow
         Allow from all
