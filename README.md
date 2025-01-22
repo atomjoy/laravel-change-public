@@ -60,7 +60,6 @@ php artisan storage:link
 php artisan config:clear
 ```
 
-
 ## Hosting settings
 
 On small.pl when you add envs dir for the domain in the admin panel.
@@ -109,6 +108,10 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NC]
     RewriteRule ^ index.php [L]
 </IfModule>
 ```
+
+## Install Vue 3
+
+How to add Vue 3 in Laravel application: <https://github.com/atomjoy/laravel-vue3-vite-config>
 
 ## Xampp
 
