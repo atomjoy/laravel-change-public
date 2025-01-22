@@ -4,7 +4,7 @@ How to run Laravel from the public_html directory on shared hosting.
 
 ## Laravel application directory
 
-Only if you can add Laravel files below public_html in your hosting using FollowSymlinks or SymLinksIfOwnerMatch (Na small.pl gdy dodasz envs dir dla domeny w panelu admina).
+Only if you can add Laravel files below public_html in your hosting using FollowSymlinks or SymLinksIfOwnerMatch.
 
 ```sh
 # Xampp example
@@ -155,3 +155,7 @@ C:\xampp\apache\conf\extra\vhosts\example.org.conf
     </FilesMatch>
 </VirtualHost>
 ```
+
+## Hosting settings
+
+Na small.pl gdy dodasz envs dir dla domeny w panelu admina.
