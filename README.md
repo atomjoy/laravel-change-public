@@ -1,6 +1,6 @@
 # Laravel from public_html
 
-How to run Laravel from the public_html directory from shared hosting.
+How to run Laravel from the public_html directory on shared hosting.
 
 ## Laravel application directory
 
