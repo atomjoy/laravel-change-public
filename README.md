@@ -58,7 +58,7 @@ php artisan config:clear
 
 ## Hosting settings
 
-Na small.pl gdy dodasz envs dir dla domeny w panelu admina.
+On small.pl when you add envs dir for the domain in the admin panel.
 
 ## Xampp
 
