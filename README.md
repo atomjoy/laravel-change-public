@@ -65,6 +65,8 @@ php artisan config:clear
 
 On small.pl when you add envs dir for the domain in the admin panel.
 
+### Examples .htaccess
+
 ```sh
 # Run Php 8.2 small.pl hosting
 AddType application/x-httpd-php82 .php
