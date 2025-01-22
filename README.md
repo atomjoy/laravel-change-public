@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 {    
     public function register(): void
     {
-        // Create symlinks from publick to public_html directory
+        // Create symlinks from publick to public_html directory in config/filesystems.php
         config(['filesystems.links' => [
             public_path('storage') => storage_path('app/public'),
             base_path('public_html') => base_path('public')
