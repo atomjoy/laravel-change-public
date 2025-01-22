@@ -66,18 +66,30 @@ php artisan config:clear
 On small.pl when you add envs dir for the domain in the admin panel.
 
 ```sh
-# Php 8.2 small.pl hosting
+# Run Php 8.2 small.pl hosting
 AddType application/x-httpd-php82 .php
 
 # Symlinks
 Options -Indexes -MultiViews +SymLinksIfOwnerMatch
 # Options -Indexes -MultiViews +FollowSymlinks
 
-DirectoryIndex index.php
+# Index file
+DirectoryIndex index.php index.html
 
+# Redirect to https
 RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Non-www
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Non-www
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www.example.org [NC]
+RewriteRule ^(.*)$ http://example.org/$1 [L,R=301]
 ```
 
 ## Xampp
