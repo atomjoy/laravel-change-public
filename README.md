@@ -65,33 +65,49 @@ php artisan config:clear
 
 On small.pl when you add envs dir for the domain in the admin panel.
 
-### Examples .htaccess
+### Laravel public directory .htaccess
 
 ```sh
-# Run Php 8.2 small.pl hosting
+# Run php 8.2, 8.3 or 8.4 on small.pl hosting
 AddType application/x-httpd-php82 .php
 
-# Symlinks
-Options -Indexes -MultiViews +SymLinksIfOwnerMatch
-# Options -Indexes -MultiViews +FollowSymlinks
-
-# Index file
-DirectoryIndex index.php index.html
-
-# Redirect to https
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Non-www
+# Without www
 RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L,NC]
 
-# Non-www
+# Force https
 RewriteEngine On
-RewriteCond %{HTTP_HOST} ^www.example.org [NC]
-RewriteRule ^(.*)$ http://example.org/$1 [L,R=301]
+RewriteCond %{SERVER_PORT} 80
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NC]
+
+# Cache images, css, js
+<filesMatch ".(jpg|jpeg|png|gif|ico|webp)$">
+    Header set Cache-Control "max-age=86400, public"
+</filesMatch>
+
+# Laravel default .htaccess
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
 ```
 
 ## Xampp
