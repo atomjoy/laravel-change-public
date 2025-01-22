@@ -55,6 +55,11 @@ php artisan storage:link
 php artisan config:clear
 ```
 
+
+## Hosting settings
+
+Na small.pl gdy dodasz envs dir dla domeny w panelu admina.
+
 ## Xampp
 
 ### Add local domain
@@ -155,7 +160,3 @@ C:\xampp\apache\conf\extra\vhosts\example.org.conf
     </FilesMatch>
 </VirtualHost>
 ```
-
-## Hosting settings
-
-Na small.pl gdy dodasz envs dir dla domeny w panelu admina.
