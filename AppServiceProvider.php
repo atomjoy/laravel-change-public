@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\App;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
-{    
+{
     public function register(): void
     {
-        // Create symlinks from publick to public_html directory
+        // Create symlinks from public to public_html directory in config/filesystems.php
         config(['filesystems.links' => [
             public_path('storage') => storage_path('app/public'),
             base_path('public_html') => base_path('public')
@@ -25,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        // Laravel force https
+        // if (App::environment(['staging', 'production'])) {
+        //     URL::forceScheme('https');
+        // }
     }
 }
