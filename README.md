@@ -53,67 +53,14 @@ class AppServiceProvider extends ServiceProvider
 
 ## Create symlinks
 
-If errors occur, remove the public_html directory from the hosting, then copy the files with symbolic links or use the commands via ssh.
+If you don't have ssh and composer, execute it locally and copy the files to the server, first deleting public_html from the server. You must be able to add files to the directory below public_html on the server.
 
 ```sh
 php artisan storage:link
 php artisan config:clear
 ```
 
-## Hosting settings
-
-On small.pl when you add envs dir for the domain in the admin panel.
-
-### Laravel public directory .htaccess
-
-```sh
-# Run php 8.2, 8.3 or 8.4 on small.pl hosting
-AddType application/x-httpd-php82 .php
-
-# Without www
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ https://%1/$1 [R=301,L,NC]
-
-# Force https
-RewriteEngine On
-RewriteCond %{SERVER_PORT} 80
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NC]
-
-# Cache images, css, js
-<filesMatch ".(jpg|jpeg|png|gif|ico|webp)$">
-    Header set Cache-Control "max-age=86400, public"
-</filesMatch>
-
-# Laravel default .htaccess
-<IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-
-    RewriteEngine On
-
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
-
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-</IfModule>
-```
-
-## Install Vue 3
-
-How to add Vue 3 in Laravel application: <https://github.com/atomjoy/laravel-vue3-vite-config>
-
-## Xampp
+## Xampp (LAMP)
 
 ### Add local domain
 
@@ -147,6 +94,11 @@ C:\xampp\apache\conf\extra\vhosts\example.org.conf
     # Create first files for logs
     #ErrorLog "D:/www/example.org/storage/logs/example.org.error.log"
     #CustomLog "D:/www/example.org/storage/logs/example.org.access.log" common
+
+    # Non-www
+    #RewriteEngine On
+    #RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    #RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
     # Redirect ssl
     #RewriteEngine On
@@ -210,4 +162,57 @@ C:\xampp\apache\conf\extra\vhosts\example.org.conf
         Header set Cache-Control "max-age=86400, public"
     </FilesMatch>
 </VirtualHost>
+```
+
+## Install Vue 3
+
+How to add Vue 3 in Laravel application: <https://github.com/atomjoy/laravel-vue3-vite-config>
+
+## Hosting settings
+
+You must be able to add files to the directory below public_html on the server. On small hosting when you add envs dir for the domain in the admin panel. 
+
+### Laravel public directory .htaccess
+
+```sh
+# Run php 8.2, 8.3 or 8.4 on small hosting
+AddType application/x-httpd-php82 .php
+
+# Without www
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L,NC]
+
+# Force https
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NC]
+
+# Cache images, css, js
+<filesMatch ".(jpg|jpeg|png|gif|ico|webp)$">
+    Header set Cache-Control "max-age=86400, public"
+</filesMatch>
+
+# Laravel default .htaccess
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
 ```
